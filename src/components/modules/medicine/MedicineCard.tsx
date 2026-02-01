@@ -28,6 +28,7 @@ import { Medicine } from "@/types";
 export function MedicineCard({ medicine }: { medicine: Medicine }) {
   return (
     <Card className="group overflow-hidden transition hover:shadow-lg">
+      <h1>This is medicine card</h1>
       {/* Image */}
       <div className="relative h-40 w-full bg-muted">
         <Image

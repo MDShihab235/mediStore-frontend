@@ -1,27 +1,21 @@
-// app/page.tsx
-
-import { getAllMedicines } from "@/services/medicine.service";
+import { medicineService } from "@/services/medicine.service";
 import { MedicineCard } from "@/components/modules/medicine/MedicineCard";
 import { FilterMedicine } from "@/components/modules/medicine/FilterMedicine";
 import { Pagination } from "@/components/modules/medicine/Pagination";
 import { Medicine, MedicineSearchParams } from "@/types";
+import { parseMedicineSearchParams } from "@/utils/parseMedicineSearchParams";
 
-export default async function Home({
-  searchParams,
-}: {
+type HomeProps = {
   searchParams: MedicineSearchParams;
-}) {
-  const page = await Number(searchParams?.page || 1);
-  const limit = 8;
+};
 
-  const result = await getAllMedicines({
-    ...searchParams,
-    page,
-    limit,
-    sortBy: "createdAt",
-    sortOrder: "desc",
-  });
+export default async function Home({ searchParams }: HomeProps) {
+  const parsedParams = await parseMedicineSearchParams(searchParams);
 
+  const result = await medicineService.getAllMedicines(parsedParams);
+
+  const medicines = result?.data ?? [];
+  const pagination = result?.pagination ?? { totalPage: 0 };
   return (
     <div className="container mx-auto py-10 grid grid-cols-12 gap-6">
       {/* Sidebar */}
@@ -31,13 +25,21 @@ export default async function Home({
 
       {/* Medicines */}
       <section className="col-span-12 md:col-span-9">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-          {result?.data?.map((medicine: Medicine) => (
-            <MedicineCard key={medicine.id} medicine={medicine} />
-          ))}
-        </div>
+        {medicines.length === 0 ? (
+          <p className="text-muted-foreground text-center py-10">
+            No medicines found
+          </p>
+        ) : (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {medicines.map((medicine: Medicine) => (
+              <MedicineCard key={medicine.id} medicine={medicine} />
+            ))}
+          </div>
+        )}
 
-        <Pagination totalPage={result?.pagination?.totalPage} />
+        {pagination.totalPage > 1 && (
+          <Pagination totalPage={result.pagination.totalPage} />
+        )}
       </section>
     </div>
   );
