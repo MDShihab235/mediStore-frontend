@@ -6,18 +6,17 @@ import { Medicine, MedicineSearchParams } from "@/types";
 import { parseMedicineSearchParams } from "@/utils/parseMedicineSearchParams";
 
 type HomeProps = {
-  searchParams: MedicineSearchParams;
+  searchParams: Promise<MedicineSearchParams>;
 };
 
 export default async function Home({ searchParams }: HomeProps) {
   const parsedParams = await parseMedicineSearchParams(searchParams);
 
   const result = await medicineService.getAllMedicines(parsedParams);
-
   const medicines = result?.data ?? [];
   const pagination = result?.pagination ?? { totalPage: 0 };
   return (
-    <div className="container mx-auto py-10 grid grid-cols-12 gap-6">
+    <div className="container mx-auto py-10 grid grid-rows gap-6">
       {/* Sidebar */}
       <aside className="col-span-12 md:col-span-3">
         <FilterMedicine />

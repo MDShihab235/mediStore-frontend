@@ -1,20 +1,28 @@
 import { MedicineSearchParams } from "@/types";
 
-export function parseMedicineSearchParams(params: MedicineSearchParams) {
+export async function parseMedicineSearchParams(
+  params: Promise<MedicineSearchParams>,
+) {
+  const resolvedParams = await params;
+
   return {
-    search: params.search,
-    category: params.category,
-    manufacturer: params.manufacturer,
-    authorId: params.authorId,
+    search: resolvedParams.search ?? "",
+    category: resolvedParams.category ?? "",
+    manufacturer: resolvedParams.manufacturer ?? "",
+    authorId: resolvedParams.authorId ?? "",
 
-    page: Number(params.page ?? 1),
-    limit: Number(params.limit ?? 8),
-    skip: params.skip ? Number(params.skip) : undefined,
+    page: Number(resolvedParams.page ?? 1),
+    limit: Number(resolvedParams.limit ?? 8),
+    skip: resolvedParams.skip ? Number(resolvedParams.skip) : undefined,
 
-    minPrice: params.minPrice ? Number(params.minPrice) : undefined,
-    maxPrice: params.maxPrice ? Number(params.maxPrice) : undefined,
+    minPrice: resolvedParams.minPrice
+      ? Number(resolvedParams.minPrice)
+      : undefined,
+    maxPrice: resolvedParams.maxPrice
+      ? Number(resolvedParams.maxPrice)
+      : undefined,
 
-    sortBy: params.sortBy ?? "createdAt",
-    sortOrder: params.sortOrder ?? "desc",
+    sortBy: resolvedParams.sortBy ?? "createdAt",
+    sortOrder: resolvedParams.sortOrder ?? "desc",
   };
 }

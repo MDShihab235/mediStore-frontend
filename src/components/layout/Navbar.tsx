@@ -54,24 +54,16 @@ interface Navbar1Props {
 
 const Navbar = ({
   logo = {
-    url: "https://www.shadcnblocks.com",
-    src: "https://deifkwefumgah.cloudfront.net/shadcnblocks/block/logos/shadcnblockscom-icon.svg",
+    url: "https://www.google.com",
+    src: "/logo.png",
     alt: "logo",
-    title: "Next Blog",
+    title: "Medi Store",
   },
   menu = [
     { title: "Home", url: "/" },
 
     {
-      title: "Blogs",
-      url: "/blogs",
-    },
-    {
       title: "About",
-      url: "/about",
-    },
-    {
-      title: "Contact",
       url: "/about",
     },
     {
@@ -94,8 +86,9 @@ const Navbar = ({
             {/* Logo */}
             <a href={logo.url} className="flex items-center gap-2">
               <img
+                width={80}
                 src={logo.src}
-                className="max-h-8 dark:invert"
+                className=" dark:invert"
                 alt={logo.alt}
               />
               <span className="text-lg font-semibold tracking-tighter">

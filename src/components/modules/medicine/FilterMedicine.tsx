@@ -21,7 +21,10 @@ export function FilterMedicine() {
   }
 
   return (
-    <form action={applyFilter} className="space-y-4">
+    <form
+      action={applyFilter}
+      className="grid grid-flow-col-dense space-x-10 gap-4"
+    >
       <Input name="category" placeholder="Category" />
       <Input name="manufacturer" placeholder="Manufacturer" />
       <Input name="minPrice" placeholder="Min price" type="number" />
