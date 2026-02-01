@@ -9,63 +9,70 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Medicine } from "@/types";
-
-// type Medicine = {
-//   id: string;
-//   name: string;
-//   price: number;
-//   manufacturer: string;
-//   image?: string;
-//   category?: {
-//     name: string;
-//   };
-//   _count?: {
-//     orderItems: number;
-//     reviews: number;
-//   };
-// };
+import { ShoppingCart, Star, Eye } from "lucide-react"; // Added for better icons
 
 export function MedicineCard({ medicine }: { medicine: Medicine }) {
   return (
-    <Card className="group overflow-hidden transition hover:shadow-lg">
-      <h1>This is medicine card</h1>
-      {/* Image */}
-      <div className="relative h-40 w-full bg-muted">
+    <Card className="group relative overflow-hidden border-none bg-card/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary/20 dark:bg-zinc-900/50 dark:hover:shadow-primary/10">
+      {/* Visual Accent - Top Gradient Bar */}
+      <div className="h-1.5 w-full bg-linear-to-r from-primary via-primary/50 to-transparent opacity-0 transition-opacity group-hover:opacity-100" />
+
+      {/* Image Container */}
+      <div className="relative aspect-4/3 w-full overflow-hidden bg-muted">
         <Image
           src={medicine.image || "/medicine.jpg"}
           alt={medicine.name}
           fill
-          className="object-cover group-hover:scale-105 transition"
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
         />
+        {/* Category Overlay */}
+        {medicine.category && (
+          <div className="absolute left-2 top-2">
+            <Badge className="border-none bg-white/90 text-[10px] font-bold text-black shadow-sm backdrop-blur-md hover:bg-white dark:bg-zinc-100/90 dark:text-zinc-900">
+              {medicine.category.name.toUpperCase()}
+            </Badge>
+          </div>
+        )}
       </div>
 
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-base line-clamp-1">
+      <CardHeader className="p-4 pb-2">
+        <CardTitle className="line-clamp-1 text-lg font-bold tracking-tight transition-colors group-hover:text-primary">
           {medicine.name}
         </CardTitle>
-
-        {medicine.category && (
-          <Badge variant="secondary" className="w-fit text-xs">
-            {medicine.category.name}
-          </Badge>
-        )}
+        <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
+          {medicine.manufacturer}
+        </p>
       </CardHeader>
 
-      <CardContent className="space-y-2 text-sm">
-        <p className="text-muted-foreground">
-          Manufacturer:{" "}
-          <span className="font-medium">{medicine.manufacturer}</span>
-        </p>
-
-        <p className="text-lg font-semibold text-primary">৳ {medicine.price}</p>
+      <CardContent className="px-4 pb-4">
+        <div className="flex items-baseline gap-1">
+          <span className="text-2xl font-black text-primary">
+            ৳{medicine.price}
+          </span>
+          <span className="text-xs text-muted-foreground line-through opacity-50">
+            ৳{medicine.price + 50}
+          </span>
+        </div>
       </CardContent>
 
-      <CardFooter className="flex items-center justify-between text-xs text-muted-foreground">
-        <span>🛒 {medicine._count?.orderItems || 0}</span>
-        <span>⭐ {medicine._count?.reviews || 0}</span>
+      <CardFooter className="flex items-center justify-between border-t bg-muted/30 p-3 dark:bg-zinc-800/30">
+        <div className="flex gap-3 text-muted-foreground">
+          <div className="flex items-center gap-1 text-[11px] font-medium">
+            <ShoppingCart className="h-3 w-3 text-primary" />
+            {medicine._count?.orderItems || 0}
+          </div>
+          <div className="flex items-center gap-1 text-[11px] font-medium">
+            <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" />
+            {medicine._count?.reviews || 0}
+          </div>
+        </div>
 
-        <Button size="sm" className="ml-auto">
-          View
+        <Button
+          size="sm"
+          className="h-8 gap-1.5 rounded-full px-4 shadow-lg shadow-primary/20 transition-all hover:shadow-none"
+        >
+          <Eye className="h-3.5 w-3.5" />
+          Details
         </Button>
       </CardFooter>
     </Card>

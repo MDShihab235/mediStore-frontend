@@ -22,16 +22,16 @@ import { toast } from "sonner";
 import * as z from "zod";
 
 const formSchema = z.object({
-  name: z.string().min(4, "This field is required"),
+  name: z.string().min(1, "This field is required"),
+  password: z.string().min(8, "Minimum length is 8"),
   email: z.email(),
-  password: z.string().min(8, "Minimun length is 8 character"),
 });
 
 export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
   const handleGoogleLogin = async () => {
     const data = authClient.signIn.social({
       provider: "google",
-      callbackURL: "http://localhost:3000",
+      callbackURL: "https://medi-store-frontend-chi.vercel.app",
     });
     console.log(data);
   };
