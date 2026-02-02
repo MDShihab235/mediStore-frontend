@@ -1,19 +1,22 @@
-import { env } from "@/env";
+// import { env } from "@/env";
 import { cookies } from "next/headers";
 
-const AUTH_URL = env.AUTH_URL;
+// const AUTH_URL = env.AUTH_URL;
 
 export const userService = {
   getSession: async function () {
     try {
       const cookieStore = await cookies();
 
-      const res = await fetch(`${AUTH_URL}/get-session`, {
-        headers: {
-          Cookie: cookieStore.toString(),
+      const res = await fetch(
+        `https://medi-store-backend-delta.vercel.app/api/auth/get-session`,
+        {
+          headers: {
+            Cookie: cookieStore.toString(),
+          },
+          cache: "no-store",
         },
-        cache: "no-store",
-      });
+      );
       const session = await res.json();
       if (session === null) {
         return { data: null, error: { message: "Session is missing." } };

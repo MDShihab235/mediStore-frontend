@@ -4,7 +4,6 @@ import { FilterMedicine } from "@/components/modules/medicine/FilterMedicine";
 import { Pagination } from "@/components/modules/medicine/Pagination";
 import { Medicine, MedicineSearchParams } from "@/types";
 import { parseMedicineSearchParams } from "@/utils/parseMedicineSearchParams";
-import { authClient } from "@/lib/auth-client";
 
 type HomeProps = {
   searchParams: Promise<MedicineSearchParams>;
@@ -16,9 +15,6 @@ export default async function Home({ searchParams }: HomeProps) {
   const result = await medicineService.getAllMedicines(parsedParams);
   const medicines = result?.data ?? [];
   const pagination = result?.pagination ?? { totalPage: 0 };
-
-  const session = await authClient.getSession();
-  console.log(session);
   return (
     <div className="container mx-auto py-10 grid grid-rows gap-6">
       {/* Sidebar */}
