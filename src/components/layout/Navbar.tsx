@@ -22,6 +22,7 @@ import {
 import Link from "next/link";
 import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
+import { Roles } from "@/constants/roles";
 
 interface MenuItem {
   title: string;
@@ -32,6 +33,14 @@ interface MenuItem {
 }
 
 interface Navbar1Props {
+  user?: {
+    name: string;
+    email: string;
+    emailVerified: boolean;
+    image: string;
+    role: "ADMIN";
+    status: "ACTIVE";
+  };
   className?: string;
   logo?: {
     url: string;
@@ -54,22 +63,22 @@ interface Navbar1Props {
 }
 
 const Navbar = ({
+  user,
   logo = {
-    url: "https://www.google.com",
+    url: "https://medi-store-frontend-chi.vercel.app/",
     src: "/logo.png",
     alt: "logo",
     title: "Medi Store",
   },
   menu = [
     { title: "Home", url: "/" },
-
     {
-      title: "About",
-      url: "/about",
+      title: "Admnin-Dashboard",
+      url: "/admin-dashboard",
     },
     {
-      title: "Dashboard",
-      url: "/dashboard",
+      title: "Seller-Dashboard",
+      url: "/seller-dashboard",
     },
   ],
   auth = {
@@ -114,6 +123,15 @@ const Navbar = ({
               <Link href={auth.signup.url}>{auth.signup.title}</Link>
             </Button>
           </div>
+          {user && (
+            <div className="flex gap-4 items-center">
+              <span>{user.email}</span>
+
+              {user.role === Roles.admin && <a href="/admin">Admin</a>}
+              {user.role === Roles.seller && <a href="/seller">Seller</a>}
+              {user.role === Roles.customer && <a href="/orders">Orders</a>}
+            </div>
+          )}
         </nav>
 
         {/* Mobile Menu */}
@@ -168,6 +186,21 @@ const Navbar = ({
                     </Button>
                   </div>
                 </div>
+                {user && (
+                  <div className="flex gap-4 items-center">
+                    <span>{user.email}</span>
+
+                    {user.role === Roles.admin && (
+                      <Link href="/admin">Admin</Link>
+                    )}
+                    {user.role === Roles.seller && (
+                      <Link href="/seller">Seller</Link>
+                    )}
+                    {user.role === Roles.customer && (
+                      <Link href="/orders">customer</Link>
+                    )}
+                  </div>
+                )}
               </SheetContent>
             </Sheet>
           </div>

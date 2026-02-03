@@ -24,7 +24,6 @@ export default async function DashboardLayout({
   if (!data?.user) {
     redirect("/login");
   }
-  console.log("Users Data: ", data);
   const userInfo = data.user;
   return (
     <SidebarProvider>

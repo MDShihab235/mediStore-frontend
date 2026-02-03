@@ -16,21 +16,25 @@ import {
   FieldError,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { env } from "@/env";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
+import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import * as z from "zod";
 
+const NEXT_PUBLIC_FRONTEND_URL = env.NEXT_PUBLIC_FRONTEND_URL;
 const formSchema = z.object({
   email: z.email(),
   password: z.string().min(8, "Minimun length is 8 character"),
 });
 
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
+  const router = useRouter();
   const handleGoogleLogin = async () => {
     const data = authClient.signIn.social({
       provider: "google",
-      callbackURL: "https://medi-store-frontend-chi.vercel.app",
+      callbackURL: `${NEXT_PUBLIC_FRONTEND_URL}`,
     });
     console.log(data);
   };
@@ -47,12 +51,18 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
       const toastId = toast.loading("Login user");
       try {
         const { data, error } = await authClient.signIn.email(value);
+        console.log(data);
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
         }
         toast.success("User Logged Successfully", { id: toastId });
+        // ✅ IMPORTANT
+        router.replace("/"); // go to home
+        router.refresh(); // force server to re-read cookies
       } catch (err) {
+        console.log(err);
+
         toast.error("Something went wrong, please try again", { id: toastId });
       }
     },

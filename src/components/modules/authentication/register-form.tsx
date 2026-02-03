@@ -16,10 +16,13 @@ import {
   FieldError,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { env } from "@/env";
 import { authClient } from "@/lib/auth-client";
 import { useForm } from "@tanstack/react-form";
 import { toast } from "sonner";
 import * as z from "zod";
+
+const NEXT_PUBLIC_FRONTEND_URL = env.NEXT_PUBLIC_FRONTEND_URL;
 
 const formSchema = z.object({
   name: z.string().min(1, "This field is required"),
@@ -31,7 +34,7 @@ export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
   const handleGoogleLogin = async () => {
     const data = authClient.signIn.social({
       provider: "google",
-      callbackURL: "https://medi-store-frontend-chi.vercel.app",
+      callbackURL: `${NEXT_PUBLIC_FRONTEND_URL}`,
     });
     console.log(data);
   };
@@ -49,12 +52,14 @@ export function RegisterForm({ ...props }: React.ComponentProps<typeof Card>) {
       const toastId = toast.loading("Creating user");
       try {
         const { data, error } = await authClient.signUp.email(value);
+        console.log(data);
         if (error) {
           toast.error(error.message, { id: toastId });
           return;
         }
         toast.success("User Created Successfully", { id: toastId });
       } catch (err) {
+        console.log(err);
         toast.error("Something went wrong, please try again", { id: toastId });
       }
     },

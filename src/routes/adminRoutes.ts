@@ -2,11 +2,11 @@ import { Route } from "@/types";
 
 export const adminRoutes: Route[] = [
   {
-    title: "User Management",
+    title: "All Management for Admin",
     items: [
       {
-        title: "Analytics",
-        url: "/analytics",
+        title: "All Users",
+        url: "/admin-dashboard/users",
       },
     ],
   },
