@@ -15,7 +15,6 @@ export default async function DashboardLayout({
   customer,
   seller,
 }: {
-  children: React.ReactNode;
   admin: React.ReactNode;
   customer: React.ReactNode;
   seller: React.ReactNode;
