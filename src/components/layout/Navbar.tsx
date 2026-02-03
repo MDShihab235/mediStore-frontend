@@ -73,7 +73,7 @@ const Navbar = ({
   menu = [
     { title: "Home", url: "/" },
     {
-      title: "Admnin-Dashboard",
+      title: "Admin-Dashboard",
       url: "/admin-dashboard",
     },
     {

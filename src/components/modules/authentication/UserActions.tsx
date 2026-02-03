@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { userClientService } from "@/services/user.service";
+import { userClientService } from "@/services/user.client";
 import { User } from "@/types";
 import { useTransition } from "react";
 import { useRouter } from "next/navigation";
