@@ -11,6 +11,7 @@ import { User } from "@/types";
 import { UserActions } from "./UserActions";
 
 export function UsersTable({ users }: { users: User[] }) {
+  console.log(users);
   return (
     <Table>
       <TableCaption>All Users (Customer, Seller, Admin)</TableCaption>

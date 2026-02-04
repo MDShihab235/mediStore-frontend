@@ -4,6 +4,7 @@ import { FilterMedicine } from "@/components/modules/medicine/FilterMedicine";
 import { Pagination } from "@/components/modules/medicine/Pagination";
 import { Medicine, MedicineSearchParams } from "@/types";
 import { parseMedicineSearchParams } from "@/utils/parseMedicineSearchParams";
+export const dynamic = "force-dynamic";
 
 type HomeProps = {
   searchParams: Promise<MedicineSearchParams>;

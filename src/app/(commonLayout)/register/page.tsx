@@ -1,4 +1,5 @@
 import { RegisterForm } from "@/components/modules/authentication/register-form";
+export const dynamic = "force-dynamic";
 
 export default function Page() {
   return (

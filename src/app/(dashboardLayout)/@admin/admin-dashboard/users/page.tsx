@@ -1,5 +1,6 @@
 import { UsersTable } from "@/components/modules/authentication/UsersTable";
 import { userService } from "@/services/user.service";
+export const dynamic = "force-dynamic";
 
 export default async function Users() {
   const { data } = await userService.getAllUsers();
