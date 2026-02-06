@@ -4,6 +4,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Users() {
   const { data } = await userService.getAllUsers();
+
   return (
     <div>
       <h1>All users</h1>

@@ -31,15 +31,18 @@ interface MenuItem {
   icon?: React.ReactNode;
   items?: MenuItem[];
 }
-
+enum Status {
+  ACTIVE,
+  BANNED,
+}
 interface Navbar1Props {
   user?: {
     name: string;
     email: string;
     emailVerified: boolean;
     image: string;
-    role: "ADMIN";
-    status: "ACTIVE";
+    role: string;
+    status: Status;
   };
   className?: string;
   logo?: {
@@ -79,6 +82,10 @@ const Navbar = ({
     {
       title: "Seller-Dashboard",
       url: "/seller-dashboard",
+    },
+    {
+      title: "Customer-Dashboard",
+      url: "/customer-dashboard",
     },
   ],
   auth = {
@@ -129,7 +136,7 @@ const Navbar = ({
 
               {user.role === Roles.admin && <a href="/admin">Admin</a>}
               {user.role === Roles.seller && <a href="/seller">Seller</a>}
-              {user.role === Roles.customer && <a href="/orders">Orders</a>}
+              {user.role === Roles.customer && <a href="/orders">Customer</a>}
             </div>
           )}
         </nav>

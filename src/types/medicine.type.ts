@@ -3,7 +3,9 @@ export type Medicine = {
   name: string;
   price: number;
   manufacturer: string;
+  stock: number;
   image?: string | null;
+  expiryDate?: Date;
   searchParams?: string | null | undefined;
   category?: {
     id: string;
