@@ -25,6 +25,7 @@ import Image from "next/image";
 import { Roles } from "@/constants/roles";
 
 import { useCart } from "@/context/cart-context";
+import { useState } from "react";
 
 interface MenuItem {
   title: string;
@@ -97,6 +98,7 @@ const Navbar = ({
   className,
 }: Navbar1Props) => {
   const { items } = useCart();
+  const [mounted] = useState(true);
 
   return (
     <section className={cn("py-4", className)}>
@@ -218,9 +220,8 @@ const Navbar = ({
           </div>
         </div>
         <Link href="/cart">
-          Cart ({items.reduce((a, b) => a + b.quantity, 0)})
+          Cart ({mounted ? items.reduce((a, b) => a + b.quantity, 0) : 0})
         </Link>
-        ;
       </div>
     </section>
   );
