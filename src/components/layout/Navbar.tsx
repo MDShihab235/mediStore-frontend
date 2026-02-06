@@ -24,6 +24,8 @@ import { ModeToggle } from "./ModeToggle";
 import Image from "next/image";
 import { Roles } from "@/constants/roles";
 
+import { useCart } from "@/context/cart-context";
+
 interface MenuItem {
   title: string;
   url: string;
@@ -94,6 +96,8 @@ const Navbar = ({
   },
   className,
 }: Navbar1Props) => {
+  const { items } = useCart();
+
   return (
     <section className={cn("py-4", className)}>
       <div className="container mx-auto px-4">
@@ -116,7 +120,9 @@ const Navbar = ({
             <div className="flex items-center">
               <NavigationMenu>
                 <NavigationMenuList>
-                  {menu.map((item) => renderMenuItem(item))}
+                  {menu.map((item) => {
+                    return renderMenuItem(item);
+                  })}
                 </NavigationMenuList>
               </NavigationMenu>
             </div>
@@ -140,7 +146,6 @@ const Navbar = ({
             </div>
           )}
         </nav>
-
         {/* Mobile Menu */}
         <div className="block lg:hidden">
           <div className="flex items-center justify-between">
@@ -212,6 +217,10 @@ const Navbar = ({
             </Sheet>
           </div>
         </div>
+        <Link href="/cart">
+          Cart ({items.reduce((a, b) => a + b.quantity, 0)})
+        </Link>
+        ;
       </div>
     </section>
   );

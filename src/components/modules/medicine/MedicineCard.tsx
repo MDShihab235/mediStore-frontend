@@ -10,6 +10,10 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Medicine } from "@/types";
 import { ShoppingCart, Star, Eye } from "lucide-react"; // Added for better icons
+import Link from "next/link";
+import { env } from "@/env";
+
+const FRONTEND_URL = env.FRONTEND_URL;
 
 export function MedicineCard({ medicine }: { medicine: Medicine }) {
   return (
@@ -67,13 +71,15 @@ export function MedicineCard({ medicine }: { medicine: Medicine }) {
           </div>
         </div>
 
-        <Button
-          size="sm"
-          className="h-8 gap-1.5 rounded-full px-4 shadow-lg shadow-primary/20 transition-all hover:shadow-none"
-        >
-          <Eye className="h-3.5 w-3.5" />
-          Details
-        </Button>
+        <Link href={`${FRONTEND_URL}/medicine/${medicine.id}`}>
+          <Button
+            size="sm"
+            className="h-8 gap-1.5 rounded-full px-4 shadow-lg shadow-primary/20 transition-all hover:shadow-none"
+          >
+            <Eye className="h-3.5 w-3.5" />
+            Details
+          </Button>
+        </Link>
       </CardFooter>
     </Card>
   );

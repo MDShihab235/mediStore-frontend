@@ -18,7 +18,6 @@ export default async function Home({ searchParams }: HomeProps) {
   const pagination = result?.pagination ?? { totalPage: 0 };
   return (
     <div className="container mx-auto py-10 grid grid-rows gap-6">
-      {/* Sidebar */}
       <aside className="col-span-12 md:col-span-3">
         <FilterMedicine />
       </aside>
