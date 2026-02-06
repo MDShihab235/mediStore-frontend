@@ -7,14 +7,14 @@ const API_URL = env.API_URL;
 export const userService = {
   getSession: async function () {
     try {
-      const cookieStore = await cookies();
+      const cookieStore = cookies();
 
       const res = await fetch(`${AUTH_URL}/get-session`, {
+        credentials: "include",
+        cache: "no-store",
         headers: {
           cookie: cookieStore.toString(),
         },
-        cache: "no-store",
-        credentials: "include",
       });
       const session = await res.json();
       if (session === null) {
