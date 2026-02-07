@@ -10,8 +10,10 @@ export default async function CommonLayout({
   children: ReactNode;
 }) {
   const { data } = await userService.getSession();
-  const user = data?.user ?? null;
+  // const user = data?.user ?? null;
 
+  const user = data?.user;
+  console.log("User Data: ", data);
   return (
     <div>
       <Navbar user={user} />

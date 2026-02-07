@@ -2,10 +2,6 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-/* =====================
-   Types
-===================== */
-
 export type CartItem = {
   medicineId: string;
   name: string;
@@ -21,31 +17,26 @@ type CartContextType = {
   clearCart: () => void;
 };
 
-/* =====================
-   Context
-===================== */
-
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-/* =====================
-   Provider
-===================== */
-
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  // Initialize from localStorage on first render
   const [items, setItems] = useState<CartItem[]>(() => {
+    if (typeof window === "undefined") return [];
     try {
       const stored = localStorage.getItem("cart");
       return stored ? JSON.parse(stored) : [];
-    } catch (error) {
-      console.error("Failed to load cart from localStorage", error);
+    } catch {
       return [];
     }
   });
 
-  // Save cart to localStorage whenever it changes
+  // ✅ Save to localStorage
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(items));
+    try {
+      localStorage.setItem("cart", JSON.stringify(items));
+    } catch (error) {
+      console.error("Failed to save cart", error);
+    }
   }, [items]);
 
   const addToCart = (item: CartItem) => {
@@ -65,7 +56,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const removeFromCart = (medicineId: string) => {
-    setItems((prev) => prev.filter((item) => item.medicineId !== medicineId));
+    setItems((prev) => prev.filter((i) => i.medicineId !== medicineId));
   };
 
   const clearCart = () => {
@@ -82,16 +73,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-/* =====================
-   Hook
-===================== */
-
 export function useCart() {
   const context = useContext(CartContext);
-
   if (!context) {
     throw new Error("useCart must be used within a CartProvider");
   }
-
   return context;
 }

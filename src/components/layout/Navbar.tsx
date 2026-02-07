@@ -25,7 +25,8 @@ import Image from "next/image";
 import { Roles } from "@/constants/roles";
 
 import { useCart } from "@/context/cart-context";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+// import { userService } from "@/services/user.service";
 
 interface MenuItem {
   title: string;
@@ -98,7 +99,18 @@ const Navbar = ({
   className,
 }: Navbar1Props) => {
   const { items } = useCart();
-  const [mounted] = useState(true);
+  // const [mounted] = useState(true);
+  const [hydrated, setHydrated] = useState(false);
+
+  console.log(user);
+
+  useEffect(() => {
+    setHydrated(true);
+  }, []);
+
+  const cartCount = hydrated
+    ? items.reduce((sum, i) => sum + i.quantity, 0)
+    : 0;
 
   return (
     <section className={cn("py-4", className)}>
@@ -219,9 +231,7 @@ const Navbar = ({
             </Sheet>
           </div>
         </div>
-        <Link href="/cart">
-          Cart ({mounted ? items.reduce((a, b) => a + b.quantity, 0) : 0})
-        </Link>
+        <Link href="/cart">🛒 {cartCount}</Link>
       </div>
     </section>
   );
