@@ -32,11 +32,10 @@ const formSchema = z.object({
 export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
   const router = useRouter();
   const handleGoogleLogin = async () => {
-    const data = authClient.signIn.social({
+    await authClient.signIn.social({
       provider: "google",
       callbackURL: `${NEXT_PUBLIC_FRONTEND_URL}`,
     });
-    console.log(data);
   };
 
   const form = useForm({
@@ -51,7 +50,7 @@ export function LoginForm({ ...props }: React.ComponentProps<typeof Card>) {
       const toastId = toast.loading("Login user");
       try {
         const { data, error } = await authClient.signIn.email(value);
-        console.log(data);
+        console.log("From login form", data);
         if (error) {
           toast.error(error.message, { id: toastId });
           return;

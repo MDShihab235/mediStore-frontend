@@ -13,7 +13,7 @@ export default async function CommonLayout({
   // const user = data?.user ?? null;
 
   const user = data?.user;
-  console.log("User Data: ", data);
+  // console.log("User Data: ", data);
   return (
     <div>
       <Navbar user={user} />

@@ -102,7 +102,7 @@ const Navbar = ({
   // const [mounted] = useState(true);
   const [hydrated, setHydrated] = useState(false);
 
-  console.log(user);
+  console.log("User from: ", user);
 
   useEffect(() => {
     setHydrated(true);
