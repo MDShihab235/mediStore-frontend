@@ -39,11 +39,13 @@ export default function CheckoutPage() {
 
       const order = await res.json();
 
+      console.log("ORDER RESPONSE", order);
+
       toast.success("Order placed successfully 🚚");
       clearCart();
 
       // 🔀 Redirect to order page
-      router.push(`orders/order/${order.id}`);
+      router.push(`/orders/order/${order.data.id}`);
     } catch {
       toast.error("Order failed. Please try again.");
     } finally {

@@ -32,7 +32,7 @@ export default function CartPage() {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/orders/cart/validate`,
+        `${NEXT_PUBLIC_API_URL}/api/orders/cart/validate`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -46,10 +46,16 @@ export default function CartPage() {
         },
       );
 
+      if (res.status === 401) {
+        toast.error("Please login to continue checkout");
+        router.push("/login");
+        return;
+      }
+
       const data = await res.json();
 
       if (!data.valid) {
-        alert(data.errors?.[0]?.message || "Some items are out of stock");
+        toast.error(data.errors?.[0]?.message || "Cart validation failed");
         return;
       }
 

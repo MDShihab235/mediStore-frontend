@@ -49,7 +49,7 @@ export function MedicineCard({ medicine }: { medicine: Medicine }) {
         </p>
       </CardHeader>
 
-      <CardContent className="px-4 pb-4">
+      <CardContent className="px-4 pb-4 grid grid-cols-2">
         <div className="flex items-baseline gap-1">
           <span className="text-2xl font-black text-primary">
             ৳{medicine.price}
@@ -57,6 +57,11 @@ export function MedicineCard({ medicine }: { medicine: Medicine }) {
           <span className="text-xs text-muted-foreground line-through opacity-50">
             ৳{medicine.price + 50}
           </span>
+        </div>
+        <div className="flex items-baseline gap-1">
+          <p className="text-[12px] tracking-wider text-emerald-600">
+            Stock available: {medicine.stock}
+          </p>
         </div>
       </CardContent>
 
