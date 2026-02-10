@@ -32,6 +32,7 @@ interface MenuItem {
   title: string;
   url: string;
   description?: string;
+  role?: string;
   icon?: React.ReactNode;
   items?: MenuItem[];
 }
@@ -82,14 +83,17 @@ const Navbar = ({
     {
       title: "Admin-Dashboard",
       url: "/admin-dashboard",
+      role: "ADMIN",
     },
     {
       title: "Seller-Dashboard",
       url: "/seller-dashboard",
+      role: "SELLER",
     },
     {
       title: "Customer-Dashboard",
       url: "/customer-dashboard",
+      role: "CUSTOMER",
     },
   ],
   auth = {

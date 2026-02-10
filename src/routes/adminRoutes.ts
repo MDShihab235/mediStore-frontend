@@ -14,11 +14,15 @@ export const adminRoutes: Route[] = [
       },
       {
         title: "Create Medicine",
-        url: "/Admin-dashboard/create-medicine",
+        url: "/admin-dashboard/create-medicine",
       },
       {
         title: "All Medicines",
         url: "/admin-dashboard/medicines",
+      },
+      {
+        title: "All Categories",
+        url: "/admin-dashboard/categories",
       },
     ],
   },

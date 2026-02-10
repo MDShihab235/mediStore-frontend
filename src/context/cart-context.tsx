@@ -13,6 +13,7 @@ export type CartItem = {
 type CartContextType = {
   items: CartItem[];
   addToCart: (item: CartItem) => void;
+  updateQuantity: (medicineId: string, quantity: number) => void;
   removeFromCart: (medicineId: string) => void;
   clearCart: () => void;
 };
@@ -20,22 +21,24 @@ type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    if (typeof window === "undefined") return [];
+  const [items, setItems] = useState<CartItem[]>([]);
+
+  // ✅ Load from localStorage (client-only)
+  useEffect(() => {
     try {
       const stored = localStorage.getItem("cart");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
+      if (stored) setItems(JSON.parse(stored));
+    } catch (err) {
+      console.error("Failed to load cart", err);
     }
-  });
+  }, []);
 
-  // ✅ Save to localStorage
+  // ✅ Persist to localStorage
   useEffect(() => {
     try {
       localStorage.setItem("cart", JSON.stringify(items));
-    } catch (error) {
-      console.error("Failed to save cart", error);
+    } catch (err) {
+      console.error("Failed to save cart", err);
     }
   }, [items]);
 
@@ -55,6 +58,16 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const updateQuantity = (medicineId: string, quantity: number) => {
+    if (quantity < 1) return;
+
+    setItems((prev) =>
+      prev.map((item) =>
+        item.medicineId === medicineId ? { ...item, quantity } : item,
+      ),
+    );
+  };
+
   const removeFromCart = (medicineId: string) => {
     setItems((prev) => prev.filter((i) => i.medicineId !== medicineId));
   };
@@ -66,7 +79,13 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <CartContext.Provider
-      value={{ items, addToCart, removeFromCart, clearCart }}
+      value={{
+        items,
+        addToCart,
+        updateQuantity,
+        removeFromCart,
+        clearCart,
+      }}
     >
       {children}
     </CartContext.Provider>
@@ -76,7 +95,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 export function useCart() {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
+    throw new Error("useCart must be used within CartProvider");
   }
   return context;
 }

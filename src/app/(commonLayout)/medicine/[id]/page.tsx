@@ -3,9 +3,9 @@ import { notFound } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Star } from "lucide-react";
-import { env } from "@/env";
 import { Review } from "@/types";
 import { AddToCartButton } from "@/components/modules/order/AddToCart";
+import { medicineService } from "@/services/medicine.service";
 
 type PageProps = {
   params: Promise<{
@@ -13,21 +13,9 @@ type PageProps = {
   }>;
 };
 
-const NEXT_PUBLIC_API_URL = env.NEXT_PUBLIC_API_URL;
-async function getMedicineById(id: string) {
-  const res = await fetch(`${NEXT_PUBLIC_API_URL}/api/medicines/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) return null;
-
-  const data = await res.json();
-  return data.result;
-}
-
 export default async function MedicineDetailsPage({ params }: PageProps) {
   const resolvedParams = await params;
-  const medicine = await getMedicineById(resolvedParams.id);
+  const medicine = await medicineService.getMedicineById(resolvedParams.id);
 
   if (!medicine) notFound();
 

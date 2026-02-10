@@ -12,6 +12,7 @@ import { Medicine } from "@/types";
 import { ShoppingCart, Star, Eye } from "lucide-react"; // Added for better icons
 import Link from "next/link";
 import { env } from "@/env";
+import { AddToCartButton } from "../order/AddToCart";
 
 const FRONTEND_URL = env.FRONTEND_URL;
 
@@ -80,6 +81,7 @@ export function MedicineCard({ medicine }: { medicine: Medicine }) {
             Details
           </Button>
         </Link>
+        <AddToCartButton medicine={medicine} />
       </CardFooter>
     </Card>
   );
