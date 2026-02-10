@@ -7,6 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { env } from "@/env";
+
+const NEXT_PUBLIC_API_URL = env.NEXT_PUBLIC_API_URL;
 
 export default function CheckoutPage() {
   const { items, clearCart } = useCart();
@@ -22,7 +25,7 @@ export default function CheckoutPage() {
 
     setLoading(true);
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/orders`, {
+      const res = await fetch(`${NEXT_PUBLIC_API_URL}/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

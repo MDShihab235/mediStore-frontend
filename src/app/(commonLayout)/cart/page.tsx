@@ -35,7 +35,10 @@ export default function CartPage() {
         `${NEXT_PUBLIC_API_URL}/api/orders/cart/validate`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
+
           credentials: "include",
           body: JSON.stringify({
             items: items.map((i) => ({
