@@ -8,13 +8,20 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Check for session token in cookies
-  const sessionToken = request.cookies.get("better-auth.session_token");
+  const cookies = request.cookies.getAll();
+  const hasSession = cookies.some((c) => c.name.startsWith("better-auth"));
 
-  //* User is not authenticated at all
-  if (!sessionToken) {
+  if (!hasSession) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  // // Check for session token in cookies
+  // const sessionToken = request.cookies.get("better-auth.session_token");
+
+  // //* User is not authenticated at all
+  // if (!sessionToken) {
+  //   return NextResponse.redirect(new URL("/login", request.url));
+  // }
 
   // Allow access if session exists
   return NextResponse.next();
