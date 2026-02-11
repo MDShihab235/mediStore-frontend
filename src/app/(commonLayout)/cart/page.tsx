@@ -49,11 +49,11 @@ export default function CartPage() {
         },
       );
 
-      // if (res.status === 401) {
-      //   toast.error("Please login to continue checkout");
-      //   router.push("/login");
-      //   return;
-      // }
+      if (res.status === 401) {
+        toast.error("Please login to continue checkout");
+        router.push("/login");
+        return;
+      }
 
       const data = await res.json();
       console.log("Validation from cart: ", data);
