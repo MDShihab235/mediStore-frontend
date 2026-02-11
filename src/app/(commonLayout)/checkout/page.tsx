@@ -61,7 +61,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="container max-w-lg py-10">
+    <div className="container mx-auto max-w-lg py-10">
       <Card>
         <CardContent className="space-y-4">
           <h2 className="text-xl font-bold">Cash on Delivery</h2>
