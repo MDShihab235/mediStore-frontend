@@ -52,7 +52,8 @@ export default function CheckoutPage() {
 
       // 🔀 Redirect to order page
       router.push(`/orders/order/${order.data.id}`);
-    } catch {
+    } catch (err) {
+      console.log(err);
       toast.error("Order failed. Please try again.");
     } finally {
       setLoading(false);
