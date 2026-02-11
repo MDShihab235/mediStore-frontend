@@ -56,7 +56,6 @@ export default function CartPage() {
       }
 
       const data = await res.json();
-      console.log("Validation from cart: ", data);
 
       if (!data.valid) {
         toast.error(data.errors?.[0]?.message || "Cart validation failed");

@@ -48,8 +48,6 @@ export default function OrderDetailsPage() {
 
         const result = await res.json();
 
-        console.log("Get order use id: ", result.data);
-
         // ✅ VERY IMPORTANT
         setOrder(result.data);
       } catch {
