@@ -27,7 +27,10 @@ export default function CheckoutPage() {
     try {
       const res = await fetch(`${NEXT_PUBLIC_API_URL}/api/orders`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          // Authorization: `Bearer ${your_access_token}`,
+        },
         credentials: "include",
         body: JSON.stringify({
           items: items.map((i) => ({
